@@ -27,7 +27,6 @@ def user_information():
 @app.route("/Authorization", methods=['POST'])
 def authorize_user():
     data = request.get_json()
-    new_data = {"Name": data['Name'], "Age": data["Age"], "Gender": data["Gender"]}
     api = request.headers.get("Authorization")
     if api and api != API_KEY:
         return "Unauthorized access"
@@ -35,11 +34,10 @@ def authorize_user():
         return "API KEY needed"
     elif api == API_KEY:
         session_id = str(uuid.uuid4())
-        new_data["id"] = session_id
-        new_list = list(new_users)
-        new_list.append(new_data)
+        new_data = {"id": session_id, "Name": data['Name'], "Age": data["Age"], "Gender": data["Gender"]}
+        new_users.append(new_data)
         with open("users.json", "w") as json_new_file:
-            json.dump(new_list, json_new_file, indent=4)
+            json.dump(new_users, json_new_file, indent=4)
         return f"Authorization Successful : Your Session_id is {session_id}"
 
 
