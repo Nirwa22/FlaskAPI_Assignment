@@ -41,7 +41,7 @@ def authorize_user():
                 json.dump(new_users, json_new_file, indent=4)
             return f"Authorization Successful : Your Session_id is {session_id}"
         except Exception:
-            return "Message: Information missing."
+            return "Message: Required information missing."
 
 
 @app.route("/Get_User_Information", methods=["POST"])
